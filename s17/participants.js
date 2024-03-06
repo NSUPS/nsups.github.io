@@ -19,7 +19,7 @@ const participants_names = {
     'barshon_18' : 'Barshon Basak',
     'thercube' : 'Rayed Riasat Rabbi',
     'euriskoEureka' : 'Bilash Das',
-    'ridi2322' : 'Meherin Ahmmed',
+    'RIDI2322' : 'Meherin Ahmmed',
     'flying_neuron' : 'Sumon Das',
     'unexist_exe' : 'Rafiul Omar Rafi',
     'taslim1708' : 'Taslim Hossain',
@@ -76,6 +76,10 @@ const participants_names = {
     'rkchamp' : 'Khan Rumman Ibne Reza',
     'sazim' : 'Sazim Rahman Siam',
     'Sohailk' : 'Sohail Kabir',
+    'zidankhan': 'Md Zidan Khan',
+    'Cursed_Child' : 'Md Ataur Rahman Ahad',
+    'Munshi': 'Sakib Uz Zaman'
+
 }
 const contests = {
     '611667': ['Indi 1', 8],

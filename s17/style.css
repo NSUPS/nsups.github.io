@@ -24,10 +24,16 @@ tbody {
 td, th {
     min-width: 100px;
     height: 25px;
-    border: dashed 1px lightblue;
+    border: dashed 1px gray;
 }
 table tr td:nth-child(2),
 table tr th:nth-child(2) {
   
-    min-width: 240px;
+    min-width: 340px;
+}
+
+a:link,
+a:visited {
+    color: blue;
+    font-weight: bold;
 }
