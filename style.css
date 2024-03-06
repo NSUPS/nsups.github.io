@@ -1,0 +1,33 @@
+html {
+    font-family: verdana;
+    font-size: 10pt;
+    line-height: 25px;
+    font-family: Arial,sans-serif;
+    font-size:medium;
+
+}
+table {
+    border-collapse: collapse;
+    text-align:center;
+    display: block;
+}
+thead {
+    background-color: #EFEFEF;
+}
+tbody {
+    display: block;
+}
+tbody {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+td, th {
+    min-width: 100px;
+    height: 25px;
+    border: dashed 1px lightblue;
+}
+table tr td:nth-child(2),
+table tr th:nth-child(2) {
+  
+    min-width: 240px;
+}
