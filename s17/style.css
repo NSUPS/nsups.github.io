@@ -1,1 +1,47 @@
-table,tbody{display:block}html{font-size:10pt;line-height:25px;font-family:Arial,sans-serif;font-size:medium}table{border-collapse:collapse;text-align:center}thead{background-color:#efefef}tbody{overflow-y:auto;overflow-x:auto}td,th{min-width:100px;height:25px;border:1px dashed gray}table tr:hover td{border-top:1px solid #000;border-bottom:1px solid #000}table tr td:nth-child(2),table tr th:nth-child(2){min-width:340px}a:link,a:visited{color:#00f;font-weight:700}
+body {
+    /* font-family: verdana; */
+    font-size: 10pt;
+    line-height: 25px;
+    /* font-family: Arial,sans-serif; */
+    font-family:  Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    font-size:medium;
+
+}
+table {
+    border-collapse: collapse;
+    text-align:center;
+    display: block;
+}
+tbody tr:first-child{
+    background-color: #EFEFEF;
+    font-weight: bold;
+    border: solid 1px gray;
+}
+tbody {
+    display: block;
+}
+tbody {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+td, th {
+    min-width: 100px;
+    height: 25px;
+    border: dotted 2px rgba(0, 0, 0, 0.3);
+}
+table tr:hover td{
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+}
+table tr td:nth-child(2),
+table tr th:nth-child(2) {
+    padding: 0 1rem;
+    overflow: hidden;
+    min-width: 300px;
+}
+
+a:link,
+a:visited {
+    color: blue;
+    font-weight: bold;
+}

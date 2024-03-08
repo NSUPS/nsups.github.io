@@ -1,1 +1,155 @@
-async function getSolveCounts(t){const e=await t.json(),n=e.submissions,o=e.participants,a={};for(let t in o)a[t]=o[t][0].toLocaleLowerCase();const c={};for(let t in n){const e=n[t][1],o=a[n[t][0]],l=n[t][2];c.hasOwnProperty(o)||(c[o]=new Set),1==l&&c[o].add(e)}return c}const table=document.querySelector("table");function getColor(t){return"rgb("+((t=Math.min(100,Math.max(0,t)))<50?255:Math.round(255-5.1*(t-50)))+","+(t>50?255:Math.round(5.1*t))+",0)"}function getColorMatte(t){return"rgba("+((t=Math.min(100,Math.max(0,t)))<50?255:Math.round(255-5.1*(t-50)))+","+(t>50?255:Math.round(5.1*t))+",0, 0.3)"}const to_original={};for(i in participants_names)to_original[i.toLocaleLowerCase()]=i;function fit(t){let e=0;for(i in contests)e+=contests[i][1];const n=document.createElement("thead"),o=document.createElement("tr"),a=document.createElement("th");a.textContent="Rank",o.appendChild(a);const l=document.createElement("th");l.textContent="Participants";const r=document.createElement("th");r.textContent=`Solved (${e})`,o.appendChild(l),o.appendChild(r);for(let t in contests){const e=document.createElement("th");e.style.color="blue";const n=document.createElement("a");n.href=`https://vjudge.net/contest/${t}`,n.target="_blank",n.textContent=`${contests[t][0]} (${contests[t][1]})`,e.appendChild(n),o.appendChild(e)}n.appendChild(o),table.appendChild(n);const s=document.createElement("tbody");let d=1;for(let n in t){const o=t[n][0],a=document.createElement("tr"),l=document.createElement("td");l.textContent=""+d++,a.appendChild(l);const r=Math.floor(100*t[n][1].total/e),i=document.createElement("td"),p=document.createElement("span");p.textContent=`${participants_names[to_original[o]]} `;const h=document.createElement("a");h.style.fontSize="small",h.style.opacity="0.6",h.href=`https://vjudge.net/user/${to_original[o]}`,h.textContent=`${to_original[o]}`,h.target="_blank",i.appendChild(p),i.appendChild(h),a.appendChild(i);const u=document.createElement("td");u.textContent=`${t[n][1].total}  [ ${r}% ]`,u.style.backgroundColor=getColor(r),a.appendChild(u);const m=t[n][1];for(c in contests){let t=0;const e=document.createElement("td");m.hasOwnProperty(c)?(e.textContent=`${m[c]}`,t=m[c]):e.textContent=" ",e.style.backgroundColor=getColorMatte(100*t/contests[c][1]),a.appendChild(e)}s.appendChild(a)}table.appendChild(s)}async function run_it(){const t={};for(let e in to_original)t[e]={};for(let e in contests){const n=await fetch(`https://vjudge.net/contest/rank/single/${e}`),o=await getSolveCounts(n);for(let n in o)to_original.hasOwnProperty(n)&&(t[n][e]=o[n].size)}for(handle in t){let e=0;for(i in t[handle])e+=t[handle][i];t[handle].total=e}const e=Object.entries(t);e.sort(((t,e)=>e[1].total-t[1].total)),fit(e)}run_it();
+async function getSolveCountsOfContestById(id) {
+    const response = await fetch(`https://vjudge.net/contest/rank/single/${id}`)
+	const json_response = await response.json();
+	const submissions_info = json_response['submissions'];
+	const participants_info = json_response['participants'];
+	const userid_to_handle = {};
+	for (let i in participants_info) {
+		userid_to_handle[i] = participants_info[i][0].toLocaleLowerCase();
+	}
+	const participant_solved_problems = {};
+	for (let i in submissions_info) {
+		const problemId = submissions_info[i][1],
+			user_id = userid_to_handle[submissions_info[i][0]],
+			verdict = submissions_info[i][2];
+		if (!participant_solved_problems.hasOwnProperty(user_id)) {
+			participant_solved_problems[user_id] = new Set();
+		}
+		if (verdict == 1) {
+			participant_solved_problems[user_id].add(problemId);
+		}
+	}
+	return participant_solved_problems;
+}
+const table = document.querySelector('table');
+function getColor(percent) {
+	percent = Math.min(100, Math.max(0, percent));
+	var red = percent < 50 ? 255 : Math.round(255 - (percent - 50) * 5.1);
+	var green = percent > 50 ? 255 : Math.round((percent * 5.1));
+	var color = 'rgb(' + red + ',' + green + ', 0)';
+	return color;
+}
+
+function getColorMatte(percent) {
+	percent = Math.min(100, Math.max(0, percent));
+	var red = percent < 50 ? 255 : Math.round(255 - (percent - 50) * 5.1);
+	var green = percent > 50 ? 255 : Math.round((percent * 5.1));
+	var color = 'rgba(' + red + ',' + green + ',0, 0.3)';
+	return color;
+}
+
+const lowerCaseHandle_to_Original = {};
+for (handle in participants_names) {
+	lowerCaseHandle_to_Original[handle.toLocaleLowerCase()] = handle;
+}
+
+function addDataToTable(entries) {
+
+	let totalProblemCount = 0;
+	for (i in contests) {
+		totalProblemCount += contests[i][1];
+	}
+
+    const tbody = document.createElement('tbody');
+
+	const head_row = document.createElement('tr');
+	
+    const rankCol = document.createElement('td');
+	rankCol.textContent = 'Rank';
+	head_row.appendChild(rankCol);
+
+	const nameCol = document.createElement('td');
+	nameCol.textContent = 'Participants';
+    head_row.appendChild(nameCol);
+
+	const totSolCol = document.createElement('td');
+	totSolCol.textContent = `Solved (${totalProblemCount})`;
+	head_row.appendChild(totSolCol);
+
+	for (let i in contests) {
+		const th = document.createElement('td');
+		th.style.color = 'blue'
+		const contestHyperLink = document.createElement('a');
+		contestHyperLink.href = `https://vjudge.net/contest/${i}`;
+		contestHyperLink.target = '_blank'
+		contestHyperLink.textContent = `${contests[i][0]} (${contests[i][1]})`;
+        th.appendChild(contestHyperLink)
+        head_row.appendChild(th);
+	}
+	tbody.appendChild(head_row);
+	
+    let participant_rank = 1;
+    
+	for (let i in entries) {
+		const user = entries[i][0];
+		const tr = document.createElement('tr');
+		
+        const rank = document.createElement('td');
+		rank.textContent = `${participant_rank ++}`;
+		tr.appendChild(rank);
+		
+        const p = Math.round((entries[i][1].total * 100) / totalProblemCount);
+		
+        const participant = document.createElement('td');
+		const name = document.createElement('span');
+		name.textContent = `${participants_names[lowerCaseHandle_to_Original[user]]} `;
+        participant.appendChild(name);
+
+		const handle = document.createElement('a');
+		handle.style.fontSize = 'small';
+		handle.href = `https://vjudge.net/user/${lowerCaseHandle_to_Original[user]}`;
+		handle.textContent = `${lowerCaseHandle_to_Original[user]}`;
+		handle.target = '_blank';
+        participant.appendChild(handle);
+		
+        tr.appendChild(participant);
+
+		const totSolved = document.createElement('td');
+		totSolved.textContent = `${entries[i][1].total}  [ ${p}% ]`;
+		totSolved.style.backgroundColor = getColor(p);
+		tr.appendChild(totSolved);
+		
+        const user_contest = entries[i][1];
+		for (c in contests) {
+			let solvecnt = 0;
+			const td = document.createElement('td');
+			if (user_contest.hasOwnProperty(c)) {
+				td.textContent = `${user_contest[c]}`;
+				solvecnt = user_contest[c];
+			} else {
+				td.textContent = ' ';
+			}
+			td.style.backgroundColor = getColorMatte((solvecnt * 100) / contests[c][1]);
+			tr.appendChild(td);
+		}
+		tbody.appendChild(tr);
+	}
+	table.appendChild(tbody);
+}
+
+async function run_it() {
+	const temp_table = {};
+	for (let i in lowerCaseHandle_to_Original) {
+		temp_table[i] = {};
+	}
+	for (let contest_id in contests) {
+		const solve_count = await getSolveCountsOfContestById(contest_id);
+		for (let handle in solve_count) {
+			if (lowerCaseHandle_to_Original.hasOwnProperty(handle)) {
+				temp_table[handle][contest_id] = solve_count[handle].size;
+			}
+		}
+	}
+	for (handle in temp_table) {
+		let tot = 0;
+		for (i in temp_table[handle]) {
+			tot += temp_table[handle][i];
+		}
+		temp_table[handle].total = tot;
+	}
+	const entries = Object.entries(temp_table);
+	entries.sort((a, b) => b[1].total - a[1].total);
+	addDataToTable(entries);
+}
+
+run_it();
