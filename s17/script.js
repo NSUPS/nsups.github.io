@@ -105,16 +105,21 @@ function addDataToTable(entries) {
         tr.appendChild(participant);
 
 		const totSolved = document.createElement('td');
-		totSolved.textContent = `${entries[i][1].total}  [ ${p}% ]`;
+		totSolved.innerHTML = `${entries[i][1].total}  [ <strong>${p}% </strong>]`;
 		totSolved.style.backgroundColor = getColor(p);
 		tr.appendChild(totSolved);
+
 		
         const user_contest = entries[i][1];
 		for (c in contests) {
 			let solvecnt = 0;
 			const td = document.createElement('td');
 			if (user_contest.hasOwnProperty(c)) {
-				td.textContent = `${user_contest[c]}`;
+				if(user_contest[c] == contests[c][1]){
+					td.innerHTML = `<i class="fa-solid fa-check fa-lg"></i>`;
+				}else{
+					td.innerHTML = `${user_contest[c]}`;
+				}
 				solvecnt = user_contest[c];
 			} else {
 				td.textContent = ' ';
