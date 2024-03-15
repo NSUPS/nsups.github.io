@@ -16,7 +16,7 @@ const participants_names = {
     'atikAkabr' : 'Mohd Atik Akbar Rahat',
     'farhan03' : 'Farhan Farooq Famim',
     'tanvir_chowdhury' : 'Mohammad Tanvir Chowdhury',
-    'barshon_18' : 'Barshon Basak',
+    'barshon_218' : 'Barshon Basak',
     'thercube' : 'Rayed Riasat Rabbi',
     'euriskoEureka' : 'Bilash Das',
     'RIDI2322' : 'Meherin Ahmmed',
@@ -88,4 +88,5 @@ const contests = {
     '613268': ['Week 2', 26],
     '614681': ['Indi 3',  7],
     '614684': ['Week 3', 26],
+    '616166': ['Indi 4',  8],
 };
