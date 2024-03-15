@@ -25,7 +25,7 @@ tbody {
     overflow-x: auto;
 }
 td, th {
-    min-width: 100px;
+    width: 100px;
     height: 25px;
     border: dotted 2px rgba(0, 0, 0, 0.3);
 }

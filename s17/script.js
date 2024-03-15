@@ -43,6 +43,11 @@ for (handle in participants_names) {
 	lowerCaseHandle_to_Original[handle.toLocaleLowerCase()] = handle;
 }
 
+ELIGIBILITY = {
+	require: true, 
+	target: 60.00, // %
+}
+
 function addDataToTable(entries) {
 
 	let totalProblemCount = 0;
@@ -65,6 +70,14 @@ function addDataToTable(entries) {
 	const totSolCol = document.createElement('td');
 	totSolCol.textContent = `Solved (${totalProblemCount})`;
 	head_row.appendChild(totSolCol);
+
+	if(ELIGIBILITY.require){
+		const elCol = document.createElement('td');
+		elCol.textContent = 'OK';
+		elCol.style.maxWidth = '30px';
+		head_row.appendChild(elCol);
+	}
+
 
 	for (let i in contests) {
 		const th = document.createElement('td');
@@ -109,6 +122,20 @@ function addDataToTable(entries) {
 		totSolved.style.backgroundColor = getColor(p);
 		tr.appendChild(totSolved);
 
+		if(ELIGIBILITY.require){
+			const eligible = document.createElement('td');
+			eligible.style.maxWidth = '30px';
+			eligible.style.fontSize = 'x-large'
+			if(p >= ELIGIBILITY.target){
+				eligible.innerHTML = `<i class="fa-solid fa-square-check"></i>`;
+				eligible.style.color = 'green';
+			}else{
+				eligible.innerHTML = `<i class="fa-solid fa-square-xmark"></i>`;
+				eligible.style.color = 'red';
+			}
+			tr.appendChild(eligible);
+		}
+
 		
         const user_contest = entries[i][1];
 		for (c in contests) {
@@ -135,26 +162,37 @@ function addDataToTable(entries) {
 async function run_it() {
 	const temp_table = {};
 	for (let i in lowerCaseHandle_to_Original) {
-		temp_table[i] = {};
+	  temp_table[i] = {};
 	}
-	for (let contest_id in contests) {
-		const solve_count = await getSolveCountsOfContestById(contest_id);
-		for (let handle in solve_count) {
-			if (lowerCaseHandle_to_Original.hasOwnProperty(handle)) {
-				temp_table[handle][contest_id] = solve_count[handle].size;
-			}
+  
+	const solveCountPromises = Object.entries(contests).map(async ([contestId, contest]) => {
+	  const solveCount = await getSolveCountsOfContestById(contestId);
+	  return { contestId, solveCount };
+	});
+  
+	const solveCountResults = await Promise.all(solveCountPromises);
+  
+	for (const result of solveCountResults) {
+	  const { contestId, solveCount } = result;
+	  for (let handle in solveCount) {
+		if (lowerCaseHandle_to_Original.hasOwnProperty(handle)) {
+		  temp_table[handle][contestId] = solveCount[handle].size;
 		}
+	  }
 	}
+  
 	for (handle in temp_table) {
-		let tot = 0;
-		for (i in temp_table[handle]) {
-			tot += temp_table[handle][i];
-		}
-		temp_table[handle].total = tot;
+	  let tot = 0;
+	  for (i in temp_table[handle]) {
+		tot += temp_table[handle][i];
+	  }
+	  temp_table[handle].total = tot;
 	}
+  
 	const entries = Object.entries(temp_table);
 	entries.sort((a, b) => b[1].total - a[1].total);
 	addDataToTable(entries);
-}
+  }
+  
 
 run_it();
