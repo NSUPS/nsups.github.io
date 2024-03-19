@@ -82,13 +82,20 @@ const participants_names = {
     'biswas2002': 'Azim Biswas’s Tazbee',
     'md_yasir_arafat': 'Md Yasir Arafat',
 }
+
+const ELIGIBILITY = {
+	require: true, 
+	target: 60.00, // %
+}
+
 const contests = {
-    '611667': ['Indi 1',  8],
-    '611807': ['Week 1', 26],
-    '613107': ['Indi 2',  6],
-    '613268': ['Week 2', 26],
-    '614681': ['Indi 3',  7],
-    '614684': ['Week 3', 26],
-    '616166': ['Indi 4',  8],
-    '616420': ['Wekk 4', 20],
+    '611667': ['Indi1',  8],
+    '611807': ['Week1', 26],
+    '613107': ['Indi2',  6],
+    '613268': ['Week2', 26],
+    '614681': ['Indi3',  7],
+    '614684': ['Week3', 26],
+    '616166': ['Indi4',  8],
+    '616420': ['Wekk4', 20],
 };
+

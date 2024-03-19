@@ -43,10 +43,7 @@ for (handle in participants_names) {
 	lowerCaseHandle_to_Original[handle.toLocaleLowerCase()] = handle;
 }
 
-ELIGIBILITY = {
-	require: true, 
-	target: 60.00, // %
-}
+
 
 function addDataToTable(entries) {
 
@@ -73,8 +70,7 @@ function addDataToTable(entries) {
 
 	if(ELIGIBILITY.require){
 		const elCol = document.createElement('td');
-		elCol.textContent = 'OK';
-		elCol.style.maxWidth = '30px';
+		elCol.textContent = `${ELIGIBILITY.target}%`;
 		head_row.appendChild(elCol);
 	}
 
