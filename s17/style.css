@@ -25,7 +25,7 @@ tbody {
     overflow-x: auto;
 }
 td, th {
-    width: 100px;
+    min-width: 100px;
     height: 25px;
     border: dotted 2px rgba(0, 0, 0, 0.3);
 }
@@ -39,6 +39,15 @@ table tr th:nth-child(2) {
     overflow: hidden;
     min-width: 300px;
 }
+
+/* IF OK */
+
+table tr td:nth-child(4),
+table tr th:nth-child(4) {
+    min-width: 25px!important;
+    max-width: 25px!important;
+}
+/* IF OK */
 
 a:link,
 a:visited {

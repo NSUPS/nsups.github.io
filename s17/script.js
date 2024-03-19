@@ -124,7 +124,6 @@ function addDataToTable(entries) {
 
 		if(ELIGIBILITY.require){
 			const eligible = document.createElement('td');
-			eligible.style.maxWidth = '30px';
 			eligible.style.fontSize = 'x-large'
 			if(p >= ELIGIBILITY.target){
 				eligible.innerHTML = `<i class="fa-solid fa-square-check"></i>`;

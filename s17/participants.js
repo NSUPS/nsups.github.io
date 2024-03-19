@@ -80,6 +80,7 @@ const participants_names = {
     'Cursed_Child' : 'Md Ataur Rahman Ahad',
     'Munshi': 'Sakib Uz Zaman',
     'biswas2002': 'Azim Biswas’s Tazbee',
+    'md_yasir_arafat': 'Md Yasir Arafat',
 }
 const contests = {
     '611667': ['Indi 1',  8],
