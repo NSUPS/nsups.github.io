@@ -71,6 +71,7 @@ function addDataToTable(entries) {
 	if(ELIGIBILITY.require){
 		const elCol = document.createElement('td');
 		elCol.textContent = `${ELIGIBILITY.target}%`;
+		elCol.classList.add('eligibility-col');
 		head_row.appendChild(elCol);
 	}
 
@@ -99,28 +100,34 @@ function addDataToTable(entries) {
 		
         const p = Math.round((entries[i][1].total * 100) / totalProblemCount);
 		
-        const participant = document.createElement('td');
-		const name = document.createElement('span');
+
+		const participantName = document.createElement('td');
+
+        const participant = document.createElement('div');
+		
+		participant.classList.add('participant');
+		const name = document.createElement('p');
+		name.classList.add('participant-name');
 		name.textContent = `${participants_names[lowerCaseHandle_to_Original[user]]} `;
         participant.appendChild(name);
 
 		const handle = document.createElement('a');
-		handle.style.fontSize = 'small';
+		handle.classList.add('participant-handle');
 		handle.href = `https://vjudge.net/user/${lowerCaseHandle_to_Original[user]}`;
 		handle.textContent = `${lowerCaseHandle_to_Original[user]}`;
 		handle.target = '_blank';
         participant.appendChild(handle);
-		
-        tr.appendChild(participant);
+		participantName.appendChild(participant);
+        tr.appendChild(participantName);
 
 		const totSolved = document.createElement('td');
-		totSolved.innerHTML = `${entries[i][1].total}  [ <strong>${p}% </strong>]`;
+		totSolved.innerHTML = `${entries[i][1].total}  [ <strong>${p }% </strong>]`;
 		totSolved.style.backgroundColor = getColor(p);
 		tr.appendChild(totSolved);
 
 		if(ELIGIBILITY.require){
 			const eligible = document.createElement('td');
-			eligible.style.fontSize = 'x-large'
+			eligible.classList.add('eligibility-col');
 			if(p >= ELIGIBILITY.target){
 				eligible.innerHTML = `<i class="fa-solid fa-square-check"></i>`;
 				eligible.style.color = 'green';
@@ -148,6 +155,11 @@ function addDataToTable(entries) {
 			}
 			td.style.backgroundColor = getColorMatte((solvecnt * 100) / contests[c][1]);
 			tr.appendChild(td);
+		}
+		if(ELIMINATION.active){
+			if(p < ELIMINATION.target){
+				tr.classList.add('eliminated');
+			}
 		}
 		tbody.appendChild(tr);
 	}

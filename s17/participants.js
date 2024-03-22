@@ -85,7 +85,12 @@ const participants_names = {
 
 const ELIGIBILITY = {
 	require: true, 
-	target: 60.00, // %
+	target: 70.00, // %
+}
+
+const ELIMINATION = {
+    active: false,
+    target: 15,
 }
 
 const contests = {
@@ -96,6 +101,8 @@ const contests = {
     '614681': ['Indi3',  7],
     '614684': ['Week3', 26],
     '616166': ['Indi4',  8],
-    '616420': ['Wekk4', 20],
+    '616420': ['Week4', 20],
+    '617626': ['Indi5',  8],
+    '618019': ['Week5', 26],
 };
 
