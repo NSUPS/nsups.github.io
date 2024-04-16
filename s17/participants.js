@@ -85,7 +85,7 @@ const participants_names = {
 
 const ELIGIBILITY = {
 	require: true, 
-	target: 70.00, // %
+	target: 80.00, // %
 }
 
 const ELIMINATION = {
